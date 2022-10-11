@@ -70,8 +70,11 @@ const Container = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: center;
-  padding: 2rem;
-  margin: 2rem 2rem 1rem;
+  flex-wrap: wrap;
+  text-align: center;
+  width: 90%;
+  padding: 2vw;
+  margin: 2vw 2vw 1vw;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   img {
@@ -81,14 +84,14 @@ const Container = styled.div`
 `;
 
 const Info = styled.section`
+  position: relative;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-  margin-left: 2rem;
+  padding: 1vw;
+  margin-left: 2vw;
   p {
-    padding: 4px;
-    font-size: 0.9rem;
     padding: 1rem;
+    font-size: 0.9rem;
   }
 `;
 const Genre = styled.article`
