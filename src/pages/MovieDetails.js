@@ -3,8 +3,9 @@ import { AppContext } from "../context";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Loading from "../components/Loading";
+import Error from "./Error";
 const MovieDetails = () => {
-  const { movieDetail, FetchSingleMovie, isLoading } =
+  const { movieDetail, FetchSingleMovie, isLoading, error } =
     React.useContext(AppContext);
   const {
     title,
@@ -26,6 +27,8 @@ const MovieDetails = () => {
 
   if (isLoading) {
     return <Loading />;
+  } else if (error.show) {
+    return <Error />;
   }
   return (
     <Container>

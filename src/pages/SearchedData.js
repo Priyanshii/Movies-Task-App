@@ -4,9 +4,9 @@ import styled from "styled-components";
 import MovieCard from "../components/MovieCard";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
-
+import Error from "./Error";
 const SearchedData = () => {
-  const { searchedMovieList, FetchSearchedMovie, isLoading } =
+  const { searchedMovieList, FetchSearchedMovie, isLoading, error } =
     React.useContext(AppContext);
 
   const params = useParams();
@@ -16,6 +16,8 @@ const SearchedData = () => {
 
   if (isLoading) {
     return <Loading />;
+  } else if (error.show) {
+    return <Error />;
   }
   return (
     <Grid>

@@ -16,6 +16,8 @@ const AppProvider = ({ children }) => {
   const FetchMovies = async () => {
     try {
       setIsLoading(true);
+      setError({ show: false, msg: "" });
+
       const response = await fetch(
         `https://movie-task.vercel.app/api/popular?page=${page}`
       );
@@ -32,14 +34,24 @@ const AppProvider = ({ children }) => {
   const FetchSingleMovie = async (id) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`
-        https://movie-task.vercel.app/api/movie?movieId=${id}
-        `);
-      const detail = await response.json();
+      setError({ show: false, msg: "" });
 
-      console.log(detail.data);
-      setMovieDetail(detail.data);
-      setIsLoading(false);
+      const response = await fetch(`
+      https://movie-task.vercel.app/api/movie?movieId=${id}
+      `);
+      if (!response.ok) {
+        setIsLoading(false);
+        setError({
+          show: true,
+          msg: "Can't fetch movie Details. Wrong Movie ID",
+        });
+      } else {
+        const detail = await response.json();
+        console.log(detail.data);
+
+        setMovieDetail(detail.data);
+        setIsLoading(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -48,13 +60,22 @@ const AppProvider = ({ children }) => {
   const FetchSearchedMovie = async (query) => {
     try {
       setIsLoading(true);
+      setError({ show: false, msg: "" });
       const response = await fetch(`
         https://movie-task.vercel.app/api/search?page=1&query=${query}`);
       const data = await response.json();
 
       console.log(data.data);
-      setSearchedMovieList(data.data);
-      setIsLoading(false);
+      if (!data.data.results.length) {
+        setIsLoading(false);
+        setError({
+          show: true,
+          msg: "Can't fetch movies. No movies with given name",
+        });
+      } else {
+        setSearchedMovieList(data.data);
+        setIsLoading(false);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -80,6 +101,7 @@ const AppProvider = ({ children }) => {
       value={{
         isLoading,
         error,
+        setError,
         moviesList,
         movieDetail,
         searchQuery,
